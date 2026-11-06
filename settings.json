@@ -4,5 +4,5 @@
     "npm:@charmland/pi-hyper-provider"
   ],
   "lastChangelogVersion": "1.5.0",
-  "theme": "dark"
+  "theme": "system"
 }
