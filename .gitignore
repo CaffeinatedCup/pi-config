@@ -5,3 +5,4 @@ git/
 tmp/
 sessions/
 *.log
+models-store.json

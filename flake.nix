@@ -41,6 +41,9 @@
           ];
           programs.pi-coding-agent = {
             enable = true;
+            # Set explicitly: nixpkgs.overlays inside a home-manager module is
+            # ignored when the host sets home-manager.useGlobalPkgs = true.
+            package = nixpkgs.legacyPackages.${pkgs.system}.pi-coding-agent;
             extraPackages = [ pkgs.nodejs ];
             configDir = "${config.home.homeDirectory}/pi-config";
           };
