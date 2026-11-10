@@ -25,16 +25,15 @@ function buildHeader(theme: Theme): string {
 	// Change this to whatever you want as the title line.
 
 	const ascii_art_2 = [
-		"   ███████████████████████████╗  ",
-		"   ╚══██████╔════════██████╔══╝  ",
-		"      ██████║        ██████║     ",
-		"      ██████║        ██████║     ",
-		"      ██████║        ██████║     ",
-		"      ██████║        ██████║     ",
-		"      ██████║        ██████║     ",
-		"      ██████║        ██████║     ",
-		"   ████████████╗  ████████████╗  ",
-		"   ╚═══════════╝  ╚═══════════╝  ",
+		"                                                   ",
+		"                                                   ",
+		"MMM\"\"\"AMV `7MM\"\"\"Yb.                 `7MM\"\"\"\"\"\"MMF'",
+		"M'   AMV    MM    `Yb.                 MM      MM  ",
+		"'   AMV     MM     `Mb                 MM      MM  ",
+		"   AMV      MM      MM                 MM      MM  ",
+		"  AMV   ,   MM     ,MP     mmmmm       MM      MM  ",
+		" AMV   ,M   MM    ,dP'                 MM      MM  ",
+		"AMVmmmmMM .JMMmmmdP'                 .JMML.  .JMML.",
 	].map(line => theme.bold(theme.fg("success", line))).join("\n");
 
 	const logo =
