@@ -6,3 +6,6 @@ tmp/
 sessions/
 *.log
 models-store.json
+
+# Extension-managed state directories (recreated on every pi start)
+pi-web-access/
