@@ -26,7 +26,7 @@ function buildHeader(theme: Theme): string {
 
 	const ascii_art_2 = [
 		"                                                   ",
-		"                                                   ",
+		"  ZD -                                             ",
 		"MMM\"\"\"AMV `7MM\"\"\"Yb.                 `7MM\"\"\"\"\"\"MMF'",
 		"M'   AMV    MM    `Yb.                 MM      MM  ",
 		"'   AMV     MM     `Mb                 MM      MM  ",
