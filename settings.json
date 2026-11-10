@@ -1,8 +1,12 @@
 {
   "$schema": "https://pi.dev/schemas/settings.schema.json",
   "packages": [
-    "npm:@charmland/pi-hyper-provider"
+    "npm:@charmland/pi-hyper-provider",
+    "npm:pi-web-access"
   ],
   "lastChangelogVersion": "1.5.0",
-  "theme": "system"
+  "theme": "system",
+  "extensionChangelogVersions": {
+    "{\"source\":\"npm:pi-web-access\",\"scope\":\"user\"}": "0.47.0"
+  }
 }
