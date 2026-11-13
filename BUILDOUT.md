@@ -8,6 +8,7 @@ Personal pi coding agent configuration. This repo is the agent directory
 - ✅ Web search (`pi-web-access`)
 - ✅ Hyper provider (`@charmland/pi-hyper-provider`)
 - ✅ Repo-as-config with clean gitignore
+- ✅ Workflow modes (`extensions/modes.ts`)
 - ❌ Everything else below
 
 ## Phase 1: Foundation
@@ -15,16 +16,31 @@ Personal pi coding agent configuration. This repo is the agent directory
 Get the core workflow modes and daily-driver tools working.
 
 ### 1a. Modes Extension + Skills
-Build a custom extension that provides `/architect`, `/learn`, `/code` commands.
-Each mode swaps system prompt and behavioral instructions via skills.
+**Done** — `extensions/modes.ts` (+ `skills/vault-notes/`, `tests/modes.test.mjs`).
+Provides `/architect`, `/learn`, `/code`, `/modes`, `/mode <name>`, and `ctrl+alt+m`.
 
-- **Architect mode** — read-only planning, weigh tradeoffs, flesh out design.
-  Consider `@narumitw/pi-plan-mode` as a base or reference.
-- **Learn mode** — Socratic co-working in Obsidian vault. Asks questions to
-  gauge understanding, writes into vault docs, creates backlinks. Reference:
-  [amosblomqvist/learn](https://github.com/amosblomqvist/learn).
-- **Code mode** — show every edit with explanation. Git-diff-style summary
-  overlay at end of turn. No vibe coding. Custom extension (no gallery match).
+Design: a mode is four levers, only one of which is a prompt.
+- **Tool gating** — `pi.setActiveTools()` strips declarations from the provider
+  request, so gated tools cannot be called (architect loses `edit`/`write`).
+- **Prompt** — written to `systemPromptOptions.sections.mode`, which Pi diffs and
+  sends as one changed section. Returning `systemPrompt` instead (as `pirate.ts`
+  does) replaces the whole prompt and costs a cache miss on every switch. Mode
+  text lives in the prompt, never as `[MODE ACTIVE]` transcript messages, so
+  there are no stale messages to filter on exit.
+- **Interception** — `tool_call` blocks what gating cannot express: mutating
+  bash in architect/learn, and any write outside the vault in learn.
+- **Persistence** — `appendEntry()` + footer `setStatus`, restored on resume.
+
+- **Architect mode** — read-only planning, tradeoffs, numbered `Plan:` output.
+  Built on pi's own `plan-mode` example rather than `@narumitw/pi-plan-mode`:
+  same idea, no dependency, and no injected per-turn user messages.
+- **Learn mode** — Socratic co-working. Conventions live in the `vault-notes`
+  skill; enforcement (vault-only writes) lives in the extension. Vault root via
+  `--vault <path>` or `PI_MODES_VAULT_DIR` (default `~/vault`).
+- **Code mode** — show every edit with explanation; `git add`/`commit` forbidden
+  per AGENTS.md. Diff-summary overlay is still open (Phase 3a).
+
+Tests: `node --experimental-strip-types tests/modes.test.mjs` (no model calls).
 
 ### 1b. Voice Dictation
 Install `pi-dictate` (Deepgram Nova-3 streaming, `alt+m` toggle).
@@ -90,6 +106,8 @@ rollups, prompt-pattern mining, session rendering across past sessions.
 |---|---|---|---|
 | `pi-web-access` | npm | installed | web search, fetch, PDF, YouTube |
 | `@charmland/pi-hyper-provider` | npm | installed | hyper/prism model provider |
+| `extensions/modes.ts` | local | installed | /architect /learn /code modes |
+| `skills/vault-notes` | local | installed | note conventions for learn mode |
 | `@alexeiled/pi-model-router` | npm | planned | prism-style model routing |
 | `@narumitw/pi-plan-mode` | npm | planned | architect mode reference |
 | `pi-lens` | npm | planned | real-time code feedback |
